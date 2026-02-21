@@ -1,32 +1,19 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import StringProperty
-
 from kivy.uix.button import Button
 
 import threading
-
 import time
 
-#like 5 secs er jonno count korbo
-#ha oita korbo kikore bhabchi like last all entries er opor avg nebo?
-#ouhh is ts my goat
+from kivy.properties import StringProperty
+
+
 
 
 class MainButton(Button):
     def __init__(self, **kwargs):
         super().__init__(**kwargs) 
 
-    
-    # def disable_button(self, t):
-
-    #     print("disabling button")
-    #     self.avg_cps = 'DISABLED'
-    #     self.disabled = True
-    #     time.sleep(t)
-    #     self.disabled = False
-
-    
 
 
 class RootWindow(BoxLayout):
@@ -42,7 +29,6 @@ class RootWindow(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.counter_thread = threading.Thread(target=self.sleep_counter, args=(self.time_limit, ))
-        #self.disable_button_thread = threading.Thread(target=MainButton().disable_button, args=(self.time_limit, ))
         
 
     def sleep_counter(self, t):
@@ -62,7 +48,7 @@ class RootWindow(BoxLayout):
 
         calculated_avg_cps = self.counter//t
         print(calculated_avg_cps)
-        #self.disable_button_thread.start()
+
         self.counter = 0
         self.avg_cps = "Press Me"
         self.FLAG = True
@@ -75,7 +61,6 @@ class RootWindow(BoxLayout):
 
         if self.FLAG:
             self.counter_thread = threading.Thread(target=self.sleep_counter, args=(self.time_limit, ))
-            #self.disable_button_thread = threading.Thread(target=MainButton().disable_button, args=(self.time_limit, ))
             self.FLAG = False
             
         if self.counter == 0:

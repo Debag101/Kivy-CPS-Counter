@@ -1,17 +1,17 @@
 A simple cps counter
 
-- Set multiple time controls : 5, 10, 15 and 30 
+- Set multiple time controls : 5, 10, 15 and 30 | Use a drop down menu
 
-- Add a custom background
+- Add a custom background | IMPORTANT 
 
-- Use custom buttons
+- Use custom buttons | custom font added
 
 - Show the time going down somewhere on the screen
 
 - Optimize code and make the project aesthetic or clean atleast
 
-- DO NOT USE THE KV FILE
+- DO NOT USE THE KV FILE - [SORRY]
 
-- Add instantaneous cps calculation
+- Add instantaneous cps calculation - [DONE]
     - Check for difference in counter every 1/nth of a second 
     - divide by time difference
