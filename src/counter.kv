@@ -1,0 +1,41 @@
+#:kivy 2.3.1
+RootWindow:
+
+<RootWindow>:
+
+    orientation: "vertical"
+    padding: "0dp", "80dp", "0dp", "0dp"
+
+    # main button design
+    MainButton:
+        text: root.avg_cps
+        size_hint: 0.8, 0.3
+        pos_hint: {"center_x": 0.5, "center_y":0.6}
+        font_name: "fonts/Minecraft.ttf"
+        font_size: "40dp"
+
+        on_press: root.callback()
+
+        color: 0, 0, 1, 1
+        background_color: 1, 0, 0, 1
+
+        id: my_button
+
+    
+
+    BoxLayout:
+
+        #CPS Text
+        Label:
+            text: "CPS : "
+            background_color: 1, 0, 0, 1
+            font_name: "fonts/Minecraft.ttf"
+            font_size: "40dp"
+
+        #Count
+        Label:
+            text: root.cps
+            font_name: "fonts/Minecraft.ttf"
+            font_size: "40dp"
+
+
