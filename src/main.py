@@ -1,35 +1,43 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 
 import threading
 import time
 
 from kivy.properties import StringProperty
-
-
-
-
-class MainButton(Button):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs) 
-
+from kivy.properties import BooleanProperty
 
 
 class RootWindow(BoxLayout):
     counter_thread = None
     FLAG = False
+    time_limit = 5
+    
 
     counter = 0
     cps = StringProperty(str(counter))
-    avg_cps = StringProperty("Press Me")
+    button_text = StringProperty("Press Me")
+    slider_timer = StringProperty(f"Timer : {time_limit}")
+    button_disabled = BooleanProperty(False)
+    final_score = StringProperty('')
 
-    time_limit = 5
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.counter_thread = threading.Thread(target=self.sleep_counter, args=(self.time_limit, ))
-        
+
+
+    def disable_button(self):
+        start_time = time.time()
+        end_time = start_time + 5
+        self.button_disabled = True
+
+        while time.time() < end_time:
+            time_left = int(end_time-time.time())
+            self.button_text = f'Button enabling in ... {time_left}'
+
+        self.button_disabled = False
+        self.button_text = 'Press Me'
 
     def sleep_counter(self, t):
 
@@ -45,12 +53,15 @@ class RootWindow(BoxLayout):
             calculated_curr_cps = self.counter // (time.time() - start_time)
             self.cps = str(calculated_curr_cps)
 
+        disable_button_thread = threading.Thread(target=self.disable_button)
+        disable_button_thread.start()
 
         calculated_avg_cps = self.counter//t
+        self.final_score = f'FINAL SCORE : {calculated_avg_cps}'
         print(calculated_avg_cps)
 
         self.counter = 0
-        self.avg_cps = "Press Me"
+        self.button_text = "Press Me"
         self.FLAG = True
 
     
@@ -60,6 +71,7 @@ class RootWindow(BoxLayout):
 
 
         if self.FLAG:
+            self.final_score = ''
             self.counter_thread = threading.Thread(target=self.sleep_counter, args=(self.time_limit, ))
             self.FLAG = False
             
@@ -68,8 +80,12 @@ class RootWindow(BoxLayout):
             
 
         self.counter += 1
-        self.avg_cps = str(self.counter)
+        self.button_text = str(self.counter)
 
+
+    def on_slide(self, slider):
+        self.time_limit = int(slider.value)
+        self.slider_timer = f'Timer : {self.time_limit}'
 
 class CounterApp(App):
     pass
